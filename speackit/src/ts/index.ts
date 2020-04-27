@@ -24,4 +24,4 @@ async function ready() {
   body.append(createStartPage(loadContent));
 }
 
-document.addEventListener('DOMContentLoaded', loadContent);
+document.addEventListener('DOMContentLoaded', ready);
