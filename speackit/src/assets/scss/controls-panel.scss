@@ -1,0 +1,42 @@
+.controls-panel {
+  padding: 20px;
+
+  &__list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  &__item {
+    @include size(25px);
+    display: block;
+    margin: 10px;
+    border-radius: 50%;
+    background: #3f51b5;
+    cursor: pointer;
+    transition: 0.3s;
+
+    &:hover {
+      background: #00BFFF;
+    }
+  }
+
+  &__item-app {
+    padding: 10px 40px;
+    margin: 20px;
+    color: #ffffff;
+    border: none;
+    background: #3f51b5;
+    cursor: pointer;
+    transition: 0.3s;
+
+    &:hover {
+      background: #00BFFF;
+    }
+  }
+
+  .selected {
+    transform: scale(1.4);
+  }
+}
