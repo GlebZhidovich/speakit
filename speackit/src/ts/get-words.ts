@@ -1,5 +1,3 @@
-const yApiKey = 'trnsl.1.1.20200426T175308Z.6d0543c65f2388ba.ce1be9f7ff5441d99a28cd7388ab7fa4778f9747';
-
 export interface WordsData {
   'word': string,
   'image': string,
@@ -9,37 +7,32 @@ export interface WordsData {
   'textMeaning': string,
   'textExample': string,
   'transcription': string
-  'translation'?: string
+  'wordTranslate': string
 }
 
-async function getTranslation(word: string): Promise<string> {
-  const url = `https://translate.yandex.net/api/v1.5/tr.json/translate?key=${yApiKey}&text= ${word} &lang=en-ru`;
-  const res = await fetch(url);
-  const data = await res.json();
-  const [translation] = data.text;
-  return translation.trim();
+function formatData(data: WordsData[]): WordsData[] {
+  return data.map((elem): WordsData => {
+    const newElem = elem;
+    const { image, audio } = newElem;
+    newElem.image = image.replace('files', '/assets/img');
+    newElem.audio = audio.replace('files', '/assets/audio');
+    return elem;
+  });
 }
 
-async function formatData(data: WordsData[]): Promise<WordsData[]> {
-  const newData = await Promise.all(
-    data.map(async (elem): Promise<WordsData> => {
-      const newElem = elem;
-      const { image, audio, word } = newElem;
-      newElem.translation = await getTranslation(word);
-      newElem.image = image.replace('files', '/speakit/assets/img');
-      newElem.audio = audio.replace('files', '/speakit/assets/audio');
-      return elem;
-    }),
-  );
-  return newData;
-}
-
-const getWords = async (page, group): Promise<WordsData[]> => {
-  const url = `https://afternoon-falls-25894.herokuapp.com/words?page=${page}&group=${group}`;
-  const res = await fetch(url);
-  const json = await res.json();
-  const data = await formatData(json);
-  return data;
+const getWords = async (page, group): Promise<WordsData[] | string> => {
+  try {
+    const url = `https://afternoon-falls-25894.herokuapp.com/words?page=${page}&group=${group}`;
+    const res = await fetch(url);
+    if (res.ok) {
+      const json = await res.json();
+      console.log(json);
+      return formatData(json);
+    }
+    throw new Error(`${res.status}`);
+  } catch (e) {
+    return e.toString();
+  }
 };
 
 export default getWords;

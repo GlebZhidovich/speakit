@@ -9,7 +9,7 @@ import { createWordsSet } from './content';
 
 function wordRow(data: WordsData): HTMLElement {
   const {
-    word, translation, transcription, audio,
+    word, wordTranslate, transcription, audio,
   } = data;
   const icon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="width: 20px;">'
     + '<path fill="currentColor" d="M15.788 13.007a3 3 0 110 5.985c.571 3.312 2.064 5.675 3.815 5.675 2.244 0 '
@@ -19,7 +19,7 @@ function wordRow(data: WordsData): HTMLElement {
   selectElem.setAttribute('data-word', word);
   const iconElem = createDomElem('span', ['result__icon']);
   const wordElem = createDomElem('span', ['result__word'], [word]);
-  const tranSlationElem = createDomElem('span', ['result__translation'], [translation]);
+  const tranSlationElem = createDomElem('span', ['result__translation'], [wordTranslate]);
   const transcriptionElem = createDomElem('span', ['result__transcription'], [transcription]);
   const audioElem = createAudio(audio, word, 'result__audio', 'result__source');
   iconElem.innerHTML = icon;

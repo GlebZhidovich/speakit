@@ -15,9 +15,9 @@ function selectWord(e: MouseEvent): void {
     (parent as HTMLElement).classList.toggle('selected');
     const audio: HTMLAudioElement = parent.querySelector('.word__item-audio');
     const data = getWordsSet().find((elem) => elem.word === word);
-    const { image, translation } = data;
+    const { image, wordTranslate } = data;
     audio.play();
-    imgTitle.innerHTML = translation;
+    imgTitle.innerHTML = wordTranslate;
     img.setAttribute('src', image);
   }
 }

@@ -12,11 +12,13 @@ async function loadContent(): Promise<void> {
   const loader = createLoader();
   body.append(loader);
   const data = await getWords(PAGE, getPageStatus());
-  setWordsSet(data);
-  const contentPage = createContentPage(getWordsSet());
-  loader.remove();
-  body.append(contentPage);
-  activeControls();
+  if (data instanceof Object) {
+    setWordsSet(data);
+    const contentPage = createContentPage(getWordsSet());
+    loader.remove();
+    body.append(contentPage);
+    activeControls();
+  }
 }
 
 async function ready() {

@@ -87,10 +87,12 @@ const actions: Actions = {
       words.innerHTML = '';
       words.append(loader);
       const dataWords = await getWords(PAGE, num);
-      setWordsSet(dataWords);
-      const wordSet = createWordsSet(dataWords);
-      loader.remove();
-      words.append(wordSet);
+      if (typeof dataWords === 'object') {
+        setWordsSet(dataWords);
+        const wordSet = createWordsSet(dataWords);
+        loader.remove();
+        words.append(wordSet);
+      }
     }
   },
   speak(): void {
